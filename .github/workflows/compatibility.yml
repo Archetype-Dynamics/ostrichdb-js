@@ -1,0 +1,41 @@
+name: API Compatibility Test
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+    
+    services:
+      ostrichdb:
+        image: ostrichdb/backend:latest
+        ports:
+          - 8042:8042
+        options: >-
+          --health-cmd "curl -f http://localhost:8042/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+        
+    - run: npm ci
+    - run: npm run build
+    
+    - name: Run API Compatibility Tests
+      run: npm run test:integration
+      env:
+        OSTRICHDB_URL: http://localhost:8042
+        TEST_JWT_TOKEN: ${{ secrets.TEST_JWT_TOKEN }}
