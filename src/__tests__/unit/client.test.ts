@@ -3,7 +3,7 @@
  */
 
 import { OstrichDBInstance, OstrichDBError } from '../../index';
-import { TEST_CONFIG } from '../setup';
+import { TEST_CONFIG } from '../../setup';
 
 // Mock fetch for unit tests
 const mockFetch = jest.fn();
