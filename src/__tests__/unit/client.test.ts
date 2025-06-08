@@ -310,7 +310,7 @@ describe('OstrichDBInstance', () => {
 
       try {
         await client.list_projects();
-      } catch (error) {
+      } catch (error: any) {
         expect(error).toBeInstanceOf(OstrichDBError);
         expect((error as OstrichDBError).statusCode).toBe(400);
         expect(error.message).toContain('Bad Request');

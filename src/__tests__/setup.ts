@@ -24,28 +24,28 @@ export const TestUtils = {
    * Generate a unique test project name
    */
   generateProjectName(): string {
-    return `${TEST_CONFIG.testPrefix}proj_test_${Math.random()}`;
+    return `${TEST_CONFIG.testPrefix}proj_test_123`;
   },
 
   /**
    * Generate a unique test collection name
    */
   generateCollectionName(): string {
-    return `${TEST_CONFIG.testPrefix}col_${Math.random()}`;
+    return `${TEST_CONFIG.testPrefix}col_test_123}`;
   },
 
   /**
    * Generate a unique test cluster name
    */
   generateClusterName(): string {
-    return `${TEST_CONFIG.testPrefix}clu_${Math.random()}`;
+    return `${TEST_CONFIG.testPrefix}clu_test_123`;
   },
 
   /**
    * Generate a unique test record name
    */
   generateRecordName(): string {
-    return `${TEST_CONFIG.testPrefix}rec_${Math.random()}`;
+    return `${TEST_CONFIG.testPrefix}rec_123`;
   },
 
   /**
