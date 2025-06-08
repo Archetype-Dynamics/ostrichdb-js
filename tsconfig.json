@@ -20,7 +20,8 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "src/setup.ts"
   ],
   "exclude": [
     "node_modules",
