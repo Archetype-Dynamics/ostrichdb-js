@@ -1,9 +1,38 @@
 {
   "name": "ostrichdb-js",
   "version": "1.0.0",
-  "main": "index.ts",
+  "description": "The Official JavaScript/TypeScript SDK For OstrichDB",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f ostrichdb"
   },
   "keywords": [
     "ostrichdb",
@@ -15,7 +44,6 @@
   ],
   "author": "Archetype Dynamics, Inc.",
   "license": "Apache-2.0",
-  "description": "The Official JavaScript/TypeScript SDK For OstrichDB",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Archetype-Dynamics/ostrichdb-js.git"
@@ -24,6 +52,10 @@
     "url": "https://github.com/Archetype-Dynamics/ostrichdb-js/issues"
   },
   "homepage": "https://github.com/Archetype-Dynamics/ostrichdb-js#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.30",
@@ -36,5 +68,13 @@
     "ts-jest": "^29.3.4",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "cross-fetch": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "cross-fetch": {
+      "optional": true
+    }
   }
 }

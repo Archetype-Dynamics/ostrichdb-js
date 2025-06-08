@@ -8,7 +8,7 @@ import {
   ClusterBuilder, 
   RecordBuilder,
   OstrichDBInstance 
-} from '../index';
+} from '../../index';
 
 // Mock the OstrichDBInstance
 const mockOstrichDBInstance = {

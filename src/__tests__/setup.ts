@@ -1,7 +1,3 @@
-/**
- * Test setup and configuration for OstrichDB-JS SDK tests
- */
-
 import * as dotenv from 'dotenv';
 
 // Load test environment variables
@@ -28,28 +24,28 @@ export const TestUtils = {
    * Generate a unique test project name
    */
   generateProjectName(): string {
-    return `${TEST_CONFIG.testPrefix}project_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `${TEST_CONFIG.testPrefix}proj_test_${Math.random()}`;
   },
 
   /**
    * Generate a unique test collection name
    */
   generateCollectionName(): string {
-    return `${TEST_CONFIG.testPrefix}collection_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `${TEST_CONFIG.testPrefix}col_${Math.random()}`;
   },
 
   /**
    * Generate a unique test cluster name
    */
   generateClusterName(): string {
-    return `${TEST_CONFIG.testPrefix}cluster_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `${TEST_CONFIG.testPrefix}clu_${Math.random()}`;
   },
 
   /**
    * Generate a unique test record name
    */
   generateRecordName(): string {
-    return `${TEST_CONFIG.testPrefix}record_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `${TEST_CONFIG.testPrefix}rec_${Math.random()}`;
   },
 
   /**

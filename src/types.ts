@@ -52,4 +52,3 @@ export class OstrichDBError extends Error {
     this.name = 'OstrichDBError';
   }
 }
-

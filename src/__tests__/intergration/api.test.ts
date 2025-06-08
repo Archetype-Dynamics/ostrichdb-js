@@ -3,8 +3,8 @@
  * These tests run against a real OstrichDB instance
  */
 
-import { OstrichDBInstance } from '../index';
-import { TEST_CONFIG, TestUtils } from './setup';
+import { OstrichDBInstance } from '../../index';
+import { TEST_CONFIG, TestUtils } from '../setup';
 
 describe('OstrichDB Integration Tests', () => {
   let client: OstrichDBInstance;

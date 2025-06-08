@@ -21,24 +21,10 @@ module.exports = {
       statements: 75
     }
   },
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testTimeout: 30000,
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  verbose: true,
-  // Separate configurations for different test types
-  projects: [
-    {
-      displayName: 'unit',
-      testMatch: ['<rootDir>/src/__tests__/unit/**/*.test.ts'],
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
-    },
-    {
-      displayName: 'integration',
-      testMatch: ['<rootDir>/src/__tests__/integration/**/*.test.ts'],
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-      testTimeout: 60000
-    }
-  ]
+  verbose: true
 };

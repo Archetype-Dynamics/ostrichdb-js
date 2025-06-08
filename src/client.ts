@@ -80,7 +80,7 @@ export class OstrichDBInstance {
       }
 
       return text;
-    } catch (error) {
+    } catch (error : any) {
       if (error instanceof OstrichDBError) {
         throw error;
       }

@@ -1,0 +1,119 @@
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run linting
+      run: npm run lint
+      
+    - name: Run type checking
+      run: npm run type-check
+      
+    - name: Build project
+      run: npm run build
+      
+    - name: Run unit tests
+      run: npm run test:unit
+      
+    - name: Start OstrichDB for integration tests
+      run: npm run docker:up
+      
+    - name: Wait for OstrichDB to be ready
+      run: |
+        timeout 60s bash -c 'until curl -f http://localhost:8042/health; do sleep 2; done'
+      
+    - name: Run integration tests
+      run: npm run test:integration
+      env:
+        OSTRICHDB_URL: http://localhost:8042
+        TEST_JWT_TOKEN: ${{ secrets.TEST_JWT_TOKEN }}
+    
+    - name: Stop OstrichDB
+      run: npm run docker:down
+      if: always()
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      if: matrix.node-version == '18.x'
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+
+  build-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+        
+    - run: npm ci
+    - run: npm run build
+    
+    - name: Check build artifacts
+      run: |
+        ls -la dist/
+        test -f dist/index.js
+        test -f dist/index.mjs
+        test -f dist/index.d.ts
+
+---
+
+# .github/workflows/release.yml
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+        
+    - run: npm ci
+    - run: npm run build
+    - run: npm test
+    
+    - name: Publish to NPM
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
