@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  ostrichdb:
+    image: ostrichdb/backend:latest
+    container_name: ostrichdb_test
+    ports:
+      - "8042:8042"
+    environment:
+      - OSTRICHDB_PORT=8042
+      - OSTRICHDB_LOG_LEVEL=info
+      - OSTRICHDB_AUTH_ENABLED=true
+      - OSTRICHDB_TEST_MODE=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8042/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - ostrichdb_data:/data
+      - ./test/init:/docker-entrypoint-initdb.d
+    networks:
+      - ostrichdb_network
+
+volumes:
+  ostrichdb_data:
+    driver: local
+
+networks:
+  ostrichdb_network:
+    driver: bridge
