@@ -27,25 +27,17 @@ export const TestUtils = {
     return `${TEST_CONFIG.testPrefix}proj_test_123`;
   },
 
-  /**
-   * Generate a unique test collection name
-   */
+
   generateCollectionName(): string {
-    return `${TEST_CONFIG.testPrefix}col_test_123}`;
+    return "col_test_123";
   },
 
-  /**
-   * Generate a unique test cluster name
-   */
   generateClusterName(): string {
-    return `${TEST_CONFIG.testPrefix}clu_test_123`;
+    return "clu_test_123";
   },
 
-  /**
-   * Generate a unique test record name
-   */
   generateRecordName(): string {
-    return `${TEST_CONFIG.testPrefix}rec_123`;
+    return "rec_test_123";
   },
 
   /**
@@ -101,7 +93,7 @@ beforeAll(async () => {
   // Check if OstrichDB is available for integration tests
   if (process.env.JEST_WORKER_ID && process.env.NODE_ENV !== 'unit') {
     const isAvailable = await TestUtils.isOstrichDBAvailable();
-    if (!isAvailable) {
+    if (isAvailable != true) {
       console.warn('⚠️  OstrichDB server not available. Integration tests may fail.');
       console.warn('   Run `npm run docker:up` to start the test server.');
     }
