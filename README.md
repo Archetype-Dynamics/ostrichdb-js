@@ -1,24 +1,16 @@
-# ostrichdb-js
-
-[![npm version](https://badge.fury.io/js/ostrichdb-js.svg)](https://badge.fury.io/js/ostrichdb-js)
-[![Test Status](https://github.com/Archetype-Dynamics/ostrichdb-js/actions/workflows/test.yml/badge.svg)](https://github.com/Archetype-Dynamics/ostrichdb-js/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/Archetype-Dynamics/ostrichdb-js/branch/main/graph/badge.svg)](https://codecov.io/gh/Archetype-Dynamics/ostrichdb-js)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-
 The Official JavaScript/TypeScript SDK for OstrichDB - A modern, fast, and scalable database solution.
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
+🚀 Quick Start
+Installation
+bash# Using npm
 npm install ostrichdb-js
-```
 
-### Basic Usage
+# Using yarn
+yarn add ostrichdb-js
 
-```typescript
-import OstrichDB from 'ostrichdb-js';
+# Using pnpm
+pnpm add ostrichdb-js
+Basic Usage
+typescriptimport OstrichDB from 'ostrichdb-js';
 
 const db = new OstrichDB({
   baseUrl: 'http://localhost:8042',
@@ -45,12 +37,8 @@ const results = await db.search_records('my-app', 'users', 'active-users', {
 });
 
 console.log('Found records:', results);
-```
-
-### Builder Pattern (Recommended)
-
-```typescript
-import OstrichDB from 'ostrichdb-js';
+Builder Pattern (Recommended)
+typescriptimport OstrichDB from 'ostrichdb-js';
 
 const db = new OstrichDB({
   baseUrl: 'http://localhost:8042',
@@ -67,9 +55,11 @@ await products.create();
 const electronics = products.cluster('electronics');
 await electronics.create();
 
-// Add product data
-await electronics.record('laptop-name', 'STRING', 'MacBook Pro').create('laptop-name', 'STRING', 'MacBook Pro');
-await electronics.record('laptop-price', 'INTEGER', '2499').create('laptop-price', 'INTEGER', '2499');
+// Add product data using builder pattern
+await electronics.record('laptop-name', 'STRING', 'MacBook Pro')
+  .create('laptop-name', 'STRING', 'MacBook Pro');
+await electronics.record('laptop-price', 'INTEGER', '2499')
+  .create('laptop-price', 'INTEGER', '2499');
 
 // Search within the cluster
 const expensiveItems = await electronics.searchRecords({
@@ -78,51 +68,37 @@ const expensiveItems = await electronics.searchRecords({
   sortBy: 'value',
   sortOrder: 'desc'
 });
-```
-
-## 📖 Documentation
-
-### Configuration
-
-```typescript
-interface OstrichDBConfig {
+📖 Documentation
+Configuration
+typescriptinterface OstrichDBConfig {
   baseUrl?: string;      // Default: 'http://localhost:8042'
   apiKey?: string;       // Your JWT token
   timeout?: number;      // Request timeout in ms (default: 30000)
 }
-```
-
-### Core Concepts
-
-**OstrichDB follows a hierarchical structure:**
-
-```
+Core Concepts
+OstrichDB follows a hierarchical structure:
 Project
 └── Collection
     └── Cluster
         └── Record
-```
 
-- **Project**: Top-level container for your application data
-- **Collection**: Groups related data within a project  
-- **Cluster**: Organizes records within a collection
-- **Record**: Individual data items with name, type, and value
+Project: Top-level container for your application data
+Collection: Groups related data within a project
+Cluster: Organizes records within a collection
+Record: Individual data items with name, type, and value
 
-### Supported Data Types
+Supported Data Types
 
-- `STRING` - Text data
-- `INTEGER` - Whole numbers
-- `FLOAT` - Decimal numbers  
-- `BOOLEAN` - true/false values
-- `DATETIME` - ISO 8601 timestamps
-- `[]STRING` - Array of strings (JSON format)
+STRING - Text data
+INTEGER - Whole numbers
+FLOAT - Decimal numbers
+BOOLEAN - true/false values
+DATETIME - ISO 8601 timestamps
+[]STRING - Array of strings (JSON format)
 
-## 🔧 API Reference
-
-### Client Initialization
-
-```typescript
-import OstrichDB from 'ostrichdb-js';
+🔧 API Reference
+Client Initialization
+typescriptimport OstrichDB from 'ostrichdb-js';
 
 const db = new OstrichDB({
   baseUrl: 'https://your-ostrichdb-instance.com',
@@ -132,12 +108,8 @@ const db = new OstrichDB({
 
 // Update token after initialization
 db.setAuthToken('new-jwt-token');
-```
-
-### Project Operations
-
-```typescript
-// List all projects
+Project Operations
+typescript// List all projects
 const projects = await db.list_projects();
 
 // Create a project  
@@ -145,12 +117,8 @@ await db.create_project('project-name');
 
 // Delete a project
 await db.delete_project('project-name');
-```
-
-### Collection Operations
-
-```typescript
-// List collections in a project
+Collection Operations
+typescript// List collections in a project
 const collections = await db.list_collections('project-name');
 
 // Create a collection
@@ -161,12 +129,8 @@ const data = await db.get_collection('project-name', 'collection-name');
 
 // Delete a collection
 await db.delete_collection('project-name', 'collection-name');
-```
-
-### Cluster Operations
-
-```typescript
-// List clusters in a collection
+Cluster Operations
+typescript// List clusters in a collection
 const clusters = await db.list_clusters('project-name', 'collection-name');
 
 // Create a cluster
@@ -177,12 +141,8 @@ const data = await db.get_cluster('project-name', 'collection-name', 'cluster-na
 
 // Delete a cluster
 await db.delete_cluster('project-name', 'collection-name', 'cluster-name');
-```
-
-### Record Operations
-
-```typescript
-// Create a record
+Record Operations
+typescript// Create a record
 await db.create_record(
   'project-name',
   'collection-name', 
@@ -209,12 +169,8 @@ const results = await db.search_records('project-name', 'collection-name', 'clus
 
 // Delete a record
 await db.delete_record('project-name', 'collection-name', 'cluster-name', 'record-name');
-```
-
-### Search Options
-
-```typescript
-interface SearchOptions {
+Search Options
+typescriptinterface SearchOptions {
   type?: string;           // Filter by data type
   search?: string;         // Search in record names
   valueContains?: string;  // Search in record values
@@ -225,22 +181,13 @@ interface SearchOptions {
   minValue?: string;       // Minimum value (for numeric types)
   maxValue?: string;       // Maximum value (for numeric types)
 }
-```
-
-### Health Check
-
-```typescript
-// Check server health
+Health Check
+typescript// Check server health
 const health = await db.health_check();
 console.log('Server status:', health);
-```
-
-## 🏗️ Builder Pattern API
-
+🏗️ Builder Pattern API
 The builder pattern provides a more intuitive, chainable API:
-
-```typescript
-// Traditional approach
+typescript// Traditional approach
 await db.create_project('blog');
 await db.create_collection('blog', 'posts');
 await db.create_cluster('blog', 'posts', 'published');
@@ -258,12 +205,8 @@ await published.create();
 
 await published.record('post-1-title', 'STRING', 'Hello World')
   .create('post-1-title', 'STRING', 'Hello World');
-```
-
-### Builder Methods
-
-```typescript
-// ProjectBuilder
+Builder Methods
+typescript// ProjectBuilder
 const project = db.project('project-name');
 await project.create();
 await project.delete();
@@ -289,14 +232,9 @@ const record = cluster.record('record-name', 'STRING', 'value');
 await record.create('name', 'type', 'value');
 const data = await record.get('identifier');
 await record.delete('record-name');
-```
-
-## 🔒 Error Handling
-
+🔒 Error Handling
 The SDK provides detailed error information:
-
-```typescript
-import { OstrichDBError } from 'ostrichdb-js';
+typescriptimport { OstrichDBError } from 'ostrichdb-js';
 
 try {
   await db.get_record('project', 'collection', 'cluster', 'non-existent');
@@ -307,14 +245,9 @@ try {
     console.log('Response:', error.response);
   }
 }
-```
-
-## 🌐 Framework Integration
-
-### Express.js
-
-```typescript
-import express from 'express';
+🌐 Framework Integration
+Express.js
+typescriptimport express from 'express';
 import OstrichDB from 'ostrichdb-js';
 
 const app = express();
@@ -344,12 +277,8 @@ app.post('/users', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-```
-
-### Next.js API Routes
-
-```typescript
-// pages/api/posts.ts
+Next.js API Routes
+typescript// pages/api/posts.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import OstrichDB from 'ostrichdb-js';
 
@@ -372,19 +301,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.json({ success: true, postId });
   }
 }
-```
+🧪 Development Setup
+Prerequisites
 
-## 🧪 Development Setup
+Node.js 16+
+Docker (for local OstrichDB instance)
 
-### Prerequisites
-
-- Node.js 16+ 
-- Docker (for local OstrichDB instance)
-
-### Installation
-
-```bash
-# Clone the repository
+Installation
+bash# Clone the repository
 git clone https://github.com/Archetype-Dynamics/ostrichdb-js.git
 cd ostrichdb-js
 
@@ -408,23 +332,14 @@ npm run build
 
 # Run in development mode
 npm run dev
-```
-
-### Environment Setup
-
-Copy `.env.example` to `.env.test` and configure:
-
-```bash
-OSTRICHDB_URL=http://localhost:8042
+Environment Setup
+Copy .env.example to .env.test and configure:
+bashOSTRICHDB_URL=http://localhost:8042
 TEST_JWT_TOKEN=your-test-jwt-token-here
 TEST_TIMEOUT=30000
 NODE_ENV=test
-```
-
-### Testing
-
-```bash
-# Run all tests
+Testing
+bash# Run all tests
 npm test
 
 # Run with coverage
@@ -438,62 +353,101 @@ npm run lint
 
 # Type checking
 npm run type-check
-```
+📝 Examples
+Check out the /src/examples directory for more detailed examples:
 
-## 📝 Examples
+Basic Usage - Simple operations and builder pattern
+Express Integration - REST API with OstrichDB
+Next.js Integration - Full-stack React application
 
-Check out the `/src/examples` directory for more detailed examples:
+Running Examples
+bash# Basic usage example
+npm run examples:basic
 
-- [Basic Usage](src/examples/basic-usage.ts) - Simple operations and builder pattern
-- [Express Integration](src/examples/express-integration.ts) - REST API with OstrichDB
-- [Next.js Integration](src/examples/next-integration.ts) - Full-stack React application
+# Express.js server example
+npm run examples:express
+🚀 Publishing & Release
+For Contributors
 
-## 🤝 Contributing
+Make your changes and ensure all tests pass
+Update version in package.json
+Create a pull request to main branch
+After merge, create a GitHub release
+CI will automatically publish to npm
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+Manual Publishing
+bash# Build and test
+npm run build
+npm test
 
-### Development Workflow
+# Publish to npm
+npm publish
+🤝 Contributing
+We welcome contributions! Please see our Contributing Guide for details.
+Development Workflow
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass: `npm test`
-6. Commit your changes: `git commit -m 'Add amazing feature'`
-7. Push to the branch: `git push origin feature/amazing-feature`
-8. Open a Pull Request
+Fork the repository
+Create a feature branch: git checkout -b feature/amazing-feature
+Make your changes
+Add tests for new functionality
+Ensure all tests pass: npm test
+Commit your changes: git commit -m 'Add amazing feature'
+Push to the branch: git push origin feature/amazing-feature
+Open a Pull Request
 
-## 📋 Changelog
+🐛 Troubleshooting
+Common Issues
+Connection Refused
+bashError: connect ECONNREFUSED 127.0.0.1:8042
 
-See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
+Ensure OstrichDB server is running: npm run docker:up
+Check the server URL in your configuration
 
-## 📄 License
+Authentication Error
+bashError: Unauthorized (401)
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+Verify your JWT token is valid and not expired
+Ensure the token has the necessary permissions
 
-## 🔗 Links
+Import/Module Errors
+bashModule not found: ostrichdb-js
 
-- [OstrichDB Official Website](https://ostrichdb.com)
-- [API Documentation](https://docs.ostrichdb.com) 
-- [GitHub Repository](https://github.com/Archetype-Dynamics/ostrichdb-js)
-- [NPM Package](https://www.npmjs.com/package/ostrichdb-js)
-- [Issue Tracker](https://github.com/Archetype-Dynamics/ostrichdb-js/issues)
+Ensure the package is installed: npm install ostrichdb-js
+For TypeScript, check your tsconfig.json configuration
 
-## ⚡ Performance Tips
+Getting Help
 
-1. **Use Builder Pattern**: More readable and maintainable code
-2. **Batch Operations**: Group related operations when possible
-3. **Connection Reuse**: Create one client instance and reuse it
-4. **Pagination**: Use `limit` and `offset` for large datasets
-5. **Indexing**: Use appropriate search filters to improve query performance
+Documentation: docs.ostrichdb.com
+Community: GitHub Discussions
+Issues: GitHub Issues
+Email: support@archetypedynamics.com
 
-## 🆘 Support
+📋 Changelog
+See CHANGELOG.md for a detailed history of changes.
+📄 License
+This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
+🔗 Links
 
-- **Documentation**: [docs.ostrichdb.com](https://docs.ostrichdb.com)
-- **Community**: [GitHub Discussions](https://github.com/Archetype-Dynamics/ostrichdb-js/discussions)
-- **Issues**: [GitHub Issues](https://github.com/Archetype-Dynamics/ostrichdb-js/issues)
-- **Email**: support@archetypedynamics.com
+OstrichDB Official Website
+API Documentation
+GitHub Repository
+NPM Package
+Issue Tracker
 
----
+⚡ Performance Tips
 
-**Made with ❤️ by [Archetype Dynamics, Inc.](https://archetypedynamics.com)**
+Use Builder Pattern: More readable and maintainable code
+Batch Operations: Group related operations when possible
+Connection Reuse: Create one client instance and reuse it
+Pagination: Use limit and offset for large datasets
+Indexing: Use appropriate search filters to improve query performance
+
+🛡️ Security
+
+Always use HTTPS in production environments
+Store JWT tokens securely (environment variables, secure storage)
+Implement proper error handling to avoid information leakage
+Regularly update dependencies to patch security vulnerabilities
+
+
+Made with ❤️ by Archetype Dynamics, Inc.

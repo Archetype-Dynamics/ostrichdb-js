@@ -20,13 +20,13 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src/**/*",
-    "src/setup.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "src/examples/**/*"
   ]
 }
