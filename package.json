@@ -6,12 +6,12 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
-  ".": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.js"
-  }
-},
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -89,7 +89,7 @@
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
     "typedoc": "^0.26.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.6.3"
   },
   "peerDependencies": {
     "cross-fetch": "^4.0.0"
