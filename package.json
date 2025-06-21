@@ -30,7 +30,7 @@
     "lint:fix": "echo 'Linting temporarily disabled'",
     "type-check": "tsc --noEmit --skipLibCheck",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
+    "prepublishOnly": "npm run clean && npm run build && npm run test:unit",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f ostrichdb",

@@ -61,6 +61,23 @@ export class TestUtils {
     return `test-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
 
+  // Add the missing generator methods
+  static generateProjectName(): string {
+    return `test-project-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  static generateCollectionName(): string {
+    return `test-collection-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  static generateClusterName(): string {
+    return `test-cluster-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  static generateRecordName(): string {
+    return `test-record-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
   static async cleanupTestData(client: any, projectName: string): Promise<void> {
     try {
       await client.delete_project(projectName);
