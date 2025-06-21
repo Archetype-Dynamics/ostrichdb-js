@@ -1,21 +1,22 @@
 {
   "name": "ostrichdb-js",
   "version": "1.0.0",
-  "description": "The Official JavaScript/TypeScript SDK For OstrichDB",
+  "description": "The Official JavaScript/TypeScript SDK for OstrichDB - A modern, fast, and scalable database solution",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  ".": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  }
+},
   "files": [
-    "dist",
+    "dist/**/*",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -32,7 +33,11 @@
     "prepublishOnly": "npm run clean && npm run build && npm run test",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f ostrichdb"
+    "docker:logs": "docker-compose logs -f ostrichdb",
+    "test:build": "node test-build.js",
+    "examples:basic": "npx tsx src/examples/basic-usage.ts",
+    "examples:express": "npx tsx src/examples/express-integration.ts",
+    "docs:generate": "typedoc src/index.ts --out docs --theme default"
   },
   "keywords": [
     "ostrichdb",
@@ -40,9 +45,24 @@
     "javascript",
     "typescript",
     "database",
-    "client"
+    "client",
+    "api",
+    "nosql",
+    "key-value",
+    "archetype-dynamics"
   ],
-  "author": "Archetype Dynamics, Inc.",
+  "author": {
+    "name": "Archetype Dynamics, Inc.",
+    "email": "support@archetypedynamics.com",
+    "url": "https://archetypedynamics.com"
+  },
+  "contributors": [
+    {
+      "name": "Marshall A Burns",
+      "email": "marshall@archetypedynamics.com",
+      "url": "https://github.com/SchoolyB"
+    }
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -66,7 +86,9 @@
     "jest": "^29.7.0",
     "nock": "^14.0.5",
     "ts-jest": "^29.3.4",
+    "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
+    "typedoc": "^0.26.2",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
@@ -76,5 +98,9 @@
     "cross-fetch": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

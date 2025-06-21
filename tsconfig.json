@@ -22,7 +22,7 @@
   "include": [
     "src/**/*",
     "src/setup.ts"
-  ],
+, "test-build.js"  ],
   "exclude": [
     "node_modules",
     "dist",
